@@ -514,6 +514,13 @@ dns:
     - '*.ffxiv.com'
     - '*.mcdn.bilivideo.cn'
     - WORKGROUP
+    # Cloudflare Worker 相关域名，防止 IP 污染
+    - '*.workers.dev'
+    - '*.cloudflareworkers.com'
+    - '*.cloudflare.com'
+    - '*.cf-api.com'
+    - '+.1111.cloudflare-dns.com'
+    - 'cloudflare-dns.com'
 
   # 支持 UDP / TCP / DoT / DoH 协议的 DNS 服务，可以指明具体的连接端口号。
   # 所有 DNS 请求将会直接发送到服务器，不经过任何代理。
@@ -521,11 +528,15 @@ dns:
   nameserver:
     - https://doh.pub/dns-query
     - https://dns.alidns.com/dns-query
+    - https://1.1.1.1/dns-query
+    - https://dns.google/dns-query
 
   # 当 fallback 参数被配置时, DNS 请求将同时发送至上方 nameserver 列表和下方 fallback 列表中配置的所有 DNS 服务器.
   # 当解析得到的 IP 地址的地理位置不是 CN 时，clash 将会选用 fallback 中 DNS 服务器的解析结果。
-  # fallback:
-  #   - https://dns.google/dns-query
+  fallback:
+    - https://1.1.1.1/dns-query
+    - https://dns.google/dns-query
+    - tls://8.8.8.8:853
 
   # 如果使用 nameserver 列表中的服务器解析的 IP 地址在下方列表中的子网中，则它们被认为是无效的，
   # Clash 会选用 fallback 列表中配置 DNS 服务器解析得到的结果。
@@ -993,6 +1004,15 @@ rules:
   - DOMAIN-SUFFIX,lancache.steamcontent.com,DIRECT
   - DOMAIN,yacd.haishan.me,国外流量
   - DOMAIN-SUFFIX,appinn.com,国外流量
+  # Cloudflare Worker 相关规则，防止 IP 污染
+  - DOMAIN-SUFFIX,workers.dev,国外流量
+  - DOMAIN-SUFFIX,cloudflareworkers.com,国外流量
+  - DOMAIN-SUFFIX,cloudflare.com,国外流量
+  - DOMAIN-SUFFIX,cf-api.com,国外流量
+  - DOMAIN-SUFFIX,1111.cloudflare-dns.com,国外流量
+  - DOMAIN-SUFFIX,cloudflare-dns.com,国外流量
+  - DOMAIN-SUFFIX,ruguoapp.com,DIRECT
+  - DOMAIN,cdnv2.ruguoapp.com,DIRECT
   - RULE-SET,OpenAI,OpenAI
   - RULE-SET,Claude,Claude
   - RULE-SET,Gemini,Gemini
