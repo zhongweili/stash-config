@@ -13,41 +13,48 @@ echo ""
 show_menu() {
     echo "请选择要执行的修复操作："
     echo ""
-    echo "1) 重载配置文件"
-    echo "2) 清理所有连接"
+    echo "1) 重启 Stash 应用"
+    echo "2) 清理网络连接"
     echo "3) 重置DNS缓存"
     echo "4) 刷新代理节点"
     echo "5) 重启代理服务"
     echo "6) 清理系统DNS设置"
     echo "7) 修复权限问题"
     echo "8) 检查端口占用"
-    echo "9) 批量修复（推荐）"
+    echo "9) 同步私有配置到 Stash"
+    echo "10) 批量修复（推荐）"
     echo "0) 退出"
     echo ""
 }
 
-reload_config() {
-    echo -e "${BLUE}正在重载配置文件...${NC}"
+restart_stash_app() {
+    echo -e "${BLUE}正在重启 Stash 应用...${NC}"
     
-    curl -X PUT "http://127.0.0.1:9090/configs?force=true" 2>/dev/null
-    if [ $? -eq 0 ]; then
-        echo -e "${GREEN}✅ 配置重载成功${NC}"
+    # 检查 Stash 是否正在运行
+    if pgrep -x "Stash" > /dev/null; then
+        echo "正在停止 Stash..."
+        killall Stash 2>/dev/null
+        sleep 2
+        
+        # 确认进程已停止
+        if pgrep -x "Stash" > /dev/null; then
+            echo -e "${YELLOW}⚠️  Stash 进程仍在运行，请手动退出应用${NC}"
+            return 1
+        else
+            echo -e "${GREEN}✅ Stash 已停止${NC}"
+            echo "请手动重新启动 Stash 应用以加载新配置"
+        fi
     else
-        echo -e "${RED}❌ 配置重载失败${NC}"
-        return 1
+        echo -e "${YELLOW}⚠️  Stash 当前未运行${NC}"
+        echo "启动 Stash 时将自动加载新配置"
     fi
 }
 
 clear_connections() {
-    echo -e "${BLUE}正在清理所有连接...${NC}"
+    echo -e "${BLUE}正在清理网络连接...${NC}"
     
-    curl -X DELETE "http://127.0.0.1:9090/connections" 2>/dev/null
-    if [ $? -eq 0 ]; then
-        echo -e "${GREEN}✅ 连接清理成功${NC}"
-    else
-        echo -e "${RED}❌ 连接清理失败${NC}"
-        return 1
-    fi
+    # 重启 Stash 是清理连接的最可靠方法
+    restart_stash_app
 }
 
 reset_dns_cache() {
@@ -67,15 +74,9 @@ reset_dns_cache() {
 refresh_proxies() {
     echo -e "${BLUE}正在刷新代理节点...${NC}"
     
-    # 强制更新代理提供者
-    curl -X PUT "http://127.0.0.1:9090/providers/proxies/airport" -d '{"name":"airport"}' 2>/dev/null
-    
-    if [ $? -eq 0 ]; then
-        echo -e "${GREEN}✅ 代理节点刷新成功${NC}"
-    else
-        echo -e "${RED}❌ 代理节点刷新失败${NC}"
-        return 1
-    fi
+    # 重启 Stash 来刷新代理节点
+    echo "重启应用是刷新代理节点的最可靠方法"
+    restart_stash_app
 }
 
 restart_proxy_service() {
@@ -164,48 +165,116 @@ check_port_usage() {
     echo -e "${GREEN}✅ 端口检查完成${NC}"
 }
 
+sync_private_config() {
+    echo -e "${BLUE}正在同步私有配置到 Stash...${NC}"
+    
+    # 检查私有配置文件是否存在
+    if [ ! -f "private/config.yaml" ]; then
+        echo -e "${RED}❌ 私有配置文件 private/config.yaml 不存在${NC}"
+        return 1
+    fi
+    
+    # Stash 配置文件路径
+    STASH_CONFIG_PATH="$HOME/Library/Application Support/Stash/Core/config.yaml"
+    
+    # 检查 Stash 配置目录是否存在
+    STASH_CONFIG_DIR="$HOME/Library/Application Support/Stash/Core"
+    if [ ! -d "$STASH_CONFIG_DIR" ]; then
+        echo -e "${YELLOW}⚠️  Stash 配置目录不存在，正在创建...${NC}"
+        mkdir -p "$STASH_CONFIG_DIR"
+    fi
+    
+    # 备份现有的 Stash 配置文件
+    if [ -f "$STASH_CONFIG_PATH" ]; then
+        backup_path="$STASH_CONFIG_PATH.backup.$(date +%Y%m%d_%H%M%S)"
+        cp "$STASH_CONFIG_PATH" "$backup_path"
+        echo "已备份现有配置到: $backup_path"
+    fi
+    
+    # 同时更新项目内配置和 Stash 配置
+    echo "正在同步配置..."
+    
+    # 1. 更新项目内配置
+    if [ -f "config/Stash-Config.yaml" ]; then
+        cp "config/Stash-Config.yaml" "config/Stash-Config.yaml.backup.$(date +%Y%m%d_%H%M%S)"
+        echo "已备份项目配置文件"
+    fi
+    cp "private/config.yaml" "config/Stash-Config.yaml"
+    
+    # 2. 更新 Stash 实际使用的配置
+    cp "private/config.yaml" "$STASH_CONFIG_PATH"
+    
+    if [ $? -eq 0 ]; then
+        echo -e "${GREEN}✅ 配置同步成功${NC}"
+        echo ""
+        echo -e "${YELLOW}已更新的配置：${NC}"
+        echo "1. 项目配置: config/Stash-Config.yaml"
+        echo "2. Stash 配置: $STASH_CONFIG_PATH"
+        echo ""
+        echo -e "${YELLOW}注意事项：${NC}"
+        echo "• 配置将在 Stash 下次启动时或重新加载时生效"
+        echo "• 如果 Stash 正在运行，可能需要重启应用"
+        echo "• 原配置已备份（带时间戳）"
+        
+        # 检查 Stash 是否正在运行
+        if pgrep -x "Stash" > /dev/null; then
+            echo ""
+            echo -e "${BLUE}检测到 Stash 正在运行${NC}"
+            read -p "是否重启 Stash 应用使配置生效? (y/n): " restart_stash
+            if [[ "$restart_stash" =~ ^[Yy]$ ]]; then
+                echo "正在重启 Stash..."
+                killall Stash 2>/dev/null
+                sleep 2
+                echo "请手动重新启动 Stash 应用"
+            fi
+        else
+            echo ""
+            echo -e "${GREEN}配置已更新，启动 Stash 时将使用新配置${NC}"
+        fi
+    else
+        echo -e "${RED}❌ 配置同步失败${NC}"
+        return 1
+    fi
+}
+
 batch_fix() {
     echo -e "${BLUE}开始批量修复...${NC}"
     echo ""
     
-    echo "1/6 重载配置文件"
-    reload_config
-    sleep 2
-    
-    echo "2/6 清理连接"
-    clear_connections
-    sleep 2
-    
-    echo "3/6 重置DNS缓存"
+    echo "1/5 重置DNS缓存"
     reset_dns_cache
     sleep 2
     
-    echo "4/6 刷新代理节点"
-    refresh_proxies
+    echo "2/5 修复系统DNS设置"
+    fix_system_dns
     sleep 2
     
-    echo "5/6 修复权限"
+    echo "3/5 修复权限"
     fix_permissions
     sleep 2
     
-    echo "6/6 检查端口"
+    echo "4/5 检查端口"
     check_port_usage
+    sleep 2
+    
+    echo "5/5 重启 Stash 应用"
+    restart_stash_app
     
     echo ""
     echo -e "${GREEN}✅ 批量修复完成${NC}"
     echo ""
-    echo "建议执行以下命令测试修复效果："
+    echo "建议在 Stash 重启后执行以下命令测试修复效果："
     echo "./scripts/website-troubleshoot.sh baidu.com"
 }
 
 # 主循环
 while true; do
     show_menu
-    read -p "请输入选项 (0-9): " choice
+    read -p "请输入选项 (0-10): " choice
     
     case $choice in
         1)
-            reload_config
+            restart_stash_app
             ;;
         2)
             clear_connections
@@ -229,6 +298,9 @@ while true; do
             check_port_usage
             ;;
         9)
+            sync_private_config
+            ;;
+        10)
             batch_fix
             ;;
         0)
