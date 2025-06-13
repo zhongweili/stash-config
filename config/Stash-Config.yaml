@@ -330,6 +330,12 @@ BASE-DATA:
       Reddit:
         rule-file-path-Reddit: &rule-file-path-Reddit myprovider/ruleset/Reddit.yaml
         rule-provider-url-Reddit: &rule-provider-url-Reddit https://cdn.jsdelivr.net/gh/zhongweili/stash-config@master/public/rules/Reddit.yaml
+      Docker:
+        rule-file-path-Docker: &rule-file-path-Docker myprovider/ruleset/Docker.yaml
+        rule-provider-url-Docker: &rule-provider-url-Docker https://cdn.jsdelivr.net/gh/zhongweili/stash-config@master/public/rules/Docker.yaml
+      Slack:
+        rule-file-path-Slack: &rule-file-path-Slack myprovider/ruleset/Slack.yaml
+        rule-provider-url-Slack: &rule-provider-url-Slack https://cdn.jsdelivr.net/gh/zhongweili/stash-config@master/public/rules/Slack.yaml
 
 
   icon-providers-config:
@@ -1019,6 +1025,7 @@ rules:
   - RULE-SET,Perplexity,Perplexity
   - RULE-SET,DownLoadClient,DIRECT
   - RULE-SET,ProxyClient,DIRECT
+  - RULE-SET,Docker,直接连接
   - RULE-SET,AdBlock,REJECT
   - RULE-SET,Apple,Apple
   - RULE-SET,Adobe,其他流量
@@ -1054,6 +1061,7 @@ rules:
   - RULE-SET,Direct,DIRECT
   - RULE-SET,IDM,IDM
   - DOMAIN-SUFFIX,live.cn,直接连接
+  - RULE-SET,Slack,国外流量
 
   - GEOIP,CN,DIRECT
   - MATCH,其他流量
@@ -1305,3 +1313,15 @@ rule-providers:
     path: *rule-file-path-Reddit
     url: *rule-provider-url-Reddit
     interval: *rule-interval
+  Docker: 
+    type: http
+    behavior: classical
+    path: *rule-file-path-Docker
+    url: *rule-provider-url-Docker
+    interval: *rule-interval
+  Slack:
+    type: http
+    behavior: classical
+    path: myprovider/ruleset/Slack.yaml
+    url: https://cdn.jsdelivr.net/gh/zhongweili/stash-config@master/public/rules/Slack.yaml
+    interval: 3600
