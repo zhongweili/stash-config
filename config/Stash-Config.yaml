@@ -169,6 +169,19 @@ BASE-DATA:
       - 🇨🇦 AIRPORT-Canada
       - 🇫🇷 AIRPORT-FR
       - 🇦🇺 AIRPORT-AU
+    proxies-all-for-cloudflare: &proxies-all-for-cloudflare
+      - 🇺🇸 AIRPORT-US
+      - 🇸🇬 AIRPORT-SG
+      - 🇭🇰 AIRPORT-HK
+      - 🇯🇵 AIRPORT-JP
+      - 🇬🇧 AIRPORT-EN
+      - 🇮🇪 AIRPORT-Ireland
+      - 🇨🇦 AIRPORT-Canada
+      - 🇦🇺 AIRPORT-AU
+      - 🇫🇷 AIRPORT-FR
+      - AIRPORT
+      - WARP+
+      - 国外流量
 
   proxy-providers-config:
     proxy-providers-use: &proxy-providers-use 
@@ -336,6 +349,9 @@ BASE-DATA:
       Slack:
         rule-file-path-Slack: &rule-file-path-Slack myprovider/ruleset/Slack.yaml
         rule-provider-url-Slack: &rule-provider-url-Slack https://cdn.jsdelivr.net/gh/zhongweili/stash-config@master/public/rules/Slack.yaml
+      Cloudflare:
+        rule-file-path-Cloudflare: &rule-file-path-Cloudflare myprovider/ruleset/Cloudflare.yaml
+        rule-provider-url-Cloudflare: &rule-provider-url-Cloudflare https://cdn.jsdelivr.net/gh/zhongweili/stash-config@master/public/rules/Cloudflare.yaml
 
 
   icon-providers-config:
@@ -520,13 +536,18 @@ dns:
     - '*.ffxiv.com'
     - '*.mcdn.bilivideo.cn'
     - WORKGROUP
-    # Cloudflare Worker 相关域名，防止 IP 污染
+    # Cloudflare 相关域名，防止 IP 污染
     - '*.workers.dev'
     - '*.cloudflareworkers.com'
     - '*.cloudflare.com'
     - '*.cf-api.com'
     - '+.1111.cloudflare-dns.com'
     - 'cloudflare-dns.com'
+    - '*.pages.dev'
+    - '*.imagedelivery.net'
+    - '*.videodelivery.net'
+    - 'cdnjs.cloudflare.com'
+    - 'ajax.cloudflare.com'
 
   # 支持 UDP / TCP / DoT / DoH 协议的 DNS 服务，可以指明具体的连接端口号。
   # 所有 DNS 请求将会直接发送到服务器，不经过任何代理。
@@ -703,6 +724,12 @@ proxy-groups:
     type: select
     proxies:
       *proxies-all-for-perplexity
+  -
+    name: Cloudflare
+    icon: *icon-Cloudflare
+    type: select
+    proxies:
+      *proxies-all-for-cloudflare
   -
     name: Youtube
     icon: *icon-YouTube
@@ -1010,13 +1037,8 @@ rules:
   - DOMAIN-SUFFIX,lancache.steamcontent.com,DIRECT
   - DOMAIN,yacd.haishan.me,国外流量
   - DOMAIN-SUFFIX,appinn.com,国外流量
-  # Cloudflare Worker 相关规则，防止 IP 污染
-  - DOMAIN-SUFFIX,workers.dev,国外流量
-  - DOMAIN-SUFFIX,cloudflareworkers.com,国外流量
-  - DOMAIN-SUFFIX,cloudflare.com,国外流量
-  - DOMAIN-SUFFIX,cf-api.com,国外流量
-  - DOMAIN-SUFFIX,1111.cloudflare-dns.com,国外流量
-  - DOMAIN-SUFFIX,cloudflare-dns.com,国外流量
+  # Cloudflare 优化规则
+  - RULE-SET,Cloudflare,Cloudflare
   - DOMAIN-SUFFIX,ruguoapp.com,DIRECT
   - DOMAIN,cdnv2.ruguoapp.com,DIRECT
   - RULE-SET,OpenAI,OpenAI
@@ -1325,3 +1347,9 @@ rule-providers:
     path: myprovider/ruleset/Slack.yaml
     url: https://cdn.jsdelivr.net/gh/zhongweili/stash-config@master/public/rules/Slack.yaml
     interval: 3600
+  Cloudflare:
+    type: http
+    behavior: classical
+    path: *rule-file-path-Cloudflare
+    url: *rule-provider-url-Cloudflare
+    interval: *rule-interval

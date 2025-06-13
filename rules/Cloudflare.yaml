@@ -1,0 +1,44 @@
+payload:
+  # Cloudflare 主要服务域名
+  - DOMAIN-SUFFIX,cloudflare.com
+  - DOMAIN-SUFFIX,cloudflaressl.com
+  - DOMAIN-SUFFIX,cloudflareinsights.com
+  - DOMAIN-SUFFIX,cloudflarestream.com
+  - DOMAIN-SUFFIX,cloudflare-dns.com
+  - DOMAIN,1.1.1.1
+  - DOMAIN,1.0.0.1
+  - DOMAIN-SUFFIX,1111.cloudflare-dns.com
+  
+  # Cloudflare Workers 和 Pages
+  - DOMAIN-SUFFIX,workers.dev
+  - DOMAIN-SUFFIX,cloudflareworkers.com
+  - DOMAIN-SUFFIX,pages.dev
+  - DOMAIN-SUFFIX,cf-api.com
+  
+  # Cloudflare CDN 相关
+  - DOMAIN-SUFFIX,cdnjs.cloudflare.com
+  - DOMAIN-SUFFIX,ajax.cloudflare.com
+  
+  # Cloudflare 开发者和管理界面
+  - DOMAIN-SUFFIX,dash.cloudflare.com
+  - DOMAIN-SUFFIX,api.cloudflare.com
+  - DOMAIN-SUFFIX,developers.cloudflare.com
+  
+  # Cloudflare Tunnel 和 Access
+  - DOMAIN-SUFFIX,cloudflareaccess.com
+  - DOMAIN-SUFFIX,trycloudflare.com
+  
+  # Cloudflare 安全服务
+  - DOMAIN,challenges.cloudflare.com
+  - DOMAIN-SUFFIX,cloudflare-gateway.com
+  
+  # Cloudflare 图像和视频服务
+  - DOMAIN-SUFFIX,imagedelivery.net
+  - DOMAIN-SUFFIX,videodelivery.net
+  
+  # Cloudflare R2 和存储
+  - DOMAIN-SUFFIX,r2.cloudflarestorage.com
+  
+  # Cloudflare 网络服务
+  - DOMAIN-SUFFIX,cloudflare-quic.com
+  - DOMAIN-SUFFIX,every1dns.net 
