@@ -1031,6 +1031,10 @@ proxy-providers:
   #     url: *health-check-url
 
 rules:
+  - DOMAIN-SUFFIX,youware.com,国外流量
+  - DOMAIN-SUFFIX,substack.com,国外流量
+  - DOMAIN,clashcloud.org,国外流量
+  - DOMAIN-KEYWORD,diabrowser,🇸🇬 AIRPORT-SG
   - DOMAIN-SUFFIX,smtp,DIRECT
   - DOMAIN-KEYWORD,aria2,DIRECT
   - DOMAIN,clash.razord.top,DIRECT
@@ -1047,7 +1051,7 @@ rules:
   - RULE-SET,Perplexity,Perplexity
   - RULE-SET,DownLoadClient,DIRECT
   - RULE-SET,ProxyClient,DIRECT
-  - RULE-SET,Docker,直接连接
+  - RULE-SET,Docker,国外流量
   - RULE-SET,AdBlock,REJECT
   - RULE-SET,Apple,Apple
   - RULE-SET,Adobe,其他流量
