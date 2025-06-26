@@ -1031,6 +1031,7 @@ proxy-providers:
   #     url: *health-check-url
 
 rules:
+  - DOMAIN-SUFFIX,debian.org,国外流量
   - DOMAIN-SUFFIX,youware.com,国外流量
   - DOMAIN-SUFFIX,substack.com,国外流量
   - DOMAIN,clashcloud.org,国外流量
