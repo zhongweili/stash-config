@@ -13,6 +13,7 @@ payload:
   - DOMAIN-SUFFIX,notebooklm.google
   - DOMAIN-SUFFIX,notebooklm.google.com
   - DOMAIN-SUFFIX,googletagmanager.com
+  - DOMAIN-SUFFIX,googleapis.com
   - DOMAIN-KEYWORD,notebooklm
   - DOMAIN-KEYWORD,colab
   - DOMAIN-KEYWORD,developerprofiles
