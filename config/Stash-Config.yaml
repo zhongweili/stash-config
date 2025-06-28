@@ -123,6 +123,18 @@ BASE-DATA:
       - 🇫🇷 AIRPORT-FR
       - 🇦🇺 AIRPORT-AU
       - AIRPORT
+    proxies-all-for-huggingface: &proxies-all-for-huggingface
+      - 🇺🇸 AIRPORT-US
+      - 🇬🇧 AIRPORT-EN
+      - 🇰🇷 AIRPORT-Korea
+      - 🇯🇵 AIRPORT-JP
+      - 🇸🇬 AIRPORT-SG
+      - 🇮🇪 AIRPORT-Ireland
+      - 🇨🇦 AIRPORT-Canada
+      - 🇫🇷 AIRPORT-FR
+      - 🇦🇺 AIRPORT-AU
+      - AIRPORT
+      - 国外流量
     proxies-all-for-perplexity: &proxies-all-for-perplexity
       - 🇺🇸 AIRPORT-US
       - 🇬🇧 AIRPORT-EN
@@ -732,7 +744,7 @@ proxy-groups:
     icon: *icon-Bot
     type: select
     proxies:
-      *proxies-all
+      *proxies-all-for-huggingface
   -
     name: Cloudflare
     icon: *icon-Cloudflare
@@ -1057,11 +1069,11 @@ rules:
   - RULE-SET,Cloudflare,Cloudflare
   - DOMAIN-SUFFIX,ruguoapp.com,DIRECT
   - DOMAIN,cdnv2.ruguoapp.com,DIRECT
+  - RULE-SET,HuggingFace,HuggingFace
   - RULE-SET,OpenAI,OpenAI
   - RULE-SET,Claude,Claude
   - RULE-SET,Gemini,Gemini
   - RULE-SET,Perplexity,Perplexity
-  - RULE-SET,HuggingFace,HuggingFace
   - RULE-SET,DownLoadClient,DIRECT
   - RULE-SET,ProxyClient,DIRECT
   - RULE-SET,Docker,国外流量

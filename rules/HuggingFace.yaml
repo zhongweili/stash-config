@@ -1,9 +1,23 @@
 payload:
-  # Hugging Face 主站
+  # Hugging Face 主站 - 确保匹配
+  - DOMAIN,huggingface.co
   - DOMAIN-SUFFIX,huggingface.co
   - DOMAIN-SUFFIX,hf.co
   
-  # Hugging Face API 和 CDN
+  # Hugging Face Hub CI
+  - DOMAIN-SUFFIX,hub-ci.huggingface.co
+  
+  # Hugging Face 新 CDN 域名 (2024-2025 更新)
+  - DOMAIN-SUFFIX,cdn-lfs.hf.co
+  - DOMAIN-SUFFIX,cdn-lfs-us-1.hf.co
+  - DOMAIN-SUFFIX,cdn-lfs-eu-1.hf.co
+  
+  # Hugging Face XetHub 新域名 (2025年2月新增)
+  - DOMAIN-SUFFIX,cas-bridge.xethub.hf.co
+  - DOMAIN-SUFFIX,cas-server.xethub.hf.co
+  - DOMAIN-SUFFIX,transfer.xethub.hf.co
+  
+  # Hugging Face 传统 API 和 CDN
   - DOMAIN-SUFFIX,huggingface.io
   - DOMAIN-SUFFIX,huggingfaceassets.com
   - DOMAIN-SUFFIX,hf-mirror.com
