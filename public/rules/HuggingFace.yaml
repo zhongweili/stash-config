@@ -1,0 +1,21 @@
+payload:
+  # Hugging Face 主站
+  - DOMAIN-SUFFIX,huggingface.co
+  - DOMAIN-SUFFIX,hf.co
+  
+  # Hugging Face API 和 CDN
+  - DOMAIN-SUFFIX,huggingface.io
+  - DOMAIN-SUFFIX,huggingfaceassets.com
+  - DOMAIN-SUFFIX,hf-mirror.com
+  
+  # Hugging Face Spaces
+  - DOMAIN-SUFFIX,hf.space
+  - DOMAIN-SUFFIX,huggingface.space
+  
+  # Hugging Face 相关子域名
+  - DOMAIN-KEYWORD,huggingface
+  - DOMAIN-KEYWORD,hf-
+  
+  # Gradio (Hugging Face Spaces 使用)
+  - DOMAIN-SUFFIX,gradio.app
+  - DOMAIN-SUFFIX,gradio.live 

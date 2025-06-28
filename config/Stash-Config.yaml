@@ -352,6 +352,9 @@ BASE-DATA:
       Cloudflare:
         rule-file-path-Cloudflare: &rule-file-path-Cloudflare myprovider/ruleset/Cloudflare.yaml
         rule-provider-url-Cloudflare: &rule-provider-url-Cloudflare https://cdn.jsdelivr.net/gh/zhongweili/stash-config@master/public/rules/Cloudflare.yaml
+      HuggingFace:
+        rule-file-path-HuggingFace: &rule-file-path-HuggingFace myprovider/ruleset/HuggingFace.yaml
+        rule-provider-url-HuggingFace: &rule-provider-url-HuggingFace https://cdn.jsdelivr.net/gh/zhongweili/stash-config@master/public/rules/HuggingFace.yaml
 
 
   icon-providers-config:
@@ -725,6 +728,12 @@ proxy-groups:
     proxies:
       *proxies-all-for-perplexity
   -
+    name: HuggingFace
+    icon: *icon-Bot
+    type: select
+    proxies:
+      *proxies-all
+  -
     name: Cloudflare
     icon: *icon-Cloudflare
     type: select
@@ -1031,6 +1040,8 @@ proxy-providers:
   #     url: *health-check-url
 
 rules:
+  - DOMAIN-SUFFIX,jsdelivr.com,国外流量
+  - DOMAIN-SUFFIX,cdn.jsdelivr.net,国外流量
   - DOMAIN-SUFFIX,debian.org,国外流量
   - DOMAIN-SUFFIX,youware.com,国外流量
   - DOMAIN-SUFFIX,substack.com,国外流量
@@ -1050,6 +1061,7 @@ rules:
   - RULE-SET,Claude,Claude
   - RULE-SET,Gemini,Gemini
   - RULE-SET,Perplexity,Perplexity
+  - RULE-SET,HuggingFace,HuggingFace
   - RULE-SET,DownLoadClient,DIRECT
   - RULE-SET,ProxyClient,DIRECT
   - RULE-SET,Docker,国外流量
@@ -1357,4 +1369,10 @@ rule-providers:
     behavior: classical
     path: *rule-file-path-Cloudflare
     url: *rule-provider-url-Cloudflare
+    interval: *rule-interval
+  HuggingFace:
+    type: http
+    behavior: classical
+    path: *rule-file-path-HuggingFace
+    url: *rule-provider-url-HuggingFace
     interval: *rule-interval
