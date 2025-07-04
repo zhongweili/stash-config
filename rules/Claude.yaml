@@ -1,6 +1,20 @@
 # NAME: Claude
+# UPDATED: 2025-07-04
 payload:
-  - DOMAIN,cdn.usefathom.com
-  - DOMAIN-SUFFIX,anthropic.com
+  # Claude / Anthropic
   - DOMAIN-SUFFIX,claude.ai
   - DOMAIN-SUFFIX,claudeusercontent.com
+  - DOMAIN-SUFFIX,anthropic.com
+  - DOMAIN,servd-anthropic-website.b-cdn.net
+  # Dependencies
+  - DOMAIN-SUFFIX,hsforms.net
+  - DOMAIN,cdn.usefathom.com
+  - DOMAIN-SUFFIX,auth0.com
+  - DOMAIN-SUFFIX,arkoselabs.com
+  - DOMAIN-SUFFIX,challenges.cloudflare.com
+  - DOMAIN-SUFFIX,stripe.com
+  - DOMAIN-SUFFIX,launchdarkly.com
+  - DOMAIN-SUFFIX,stripe.network
+  - DOMAIN-SUFFIX,intercom.io
+  - DOMAIN-SUFFIX,intercomcdn.com
+  - DOMAIN-SUFFIX,segment.io
