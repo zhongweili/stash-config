@@ -568,6 +568,10 @@ dns:
   # 所有 DNS 请求将会直接发送到服务器，不经过任何代理。
   # Clash 会使用最先获得的解析记录回复 DNS 请求
   nameserver:
+    - 223.5.5.5
+    - 114.114.114.114
+    - 8.8.8.8
+    - 1.1.1.1
     - https://doh.pub/dns-query
     - https://dns.alidns.com/dns-query
     - https://1.1.1.1/dns-query
@@ -1113,6 +1117,13 @@ rules:
   - RULE-SET,IDM,IDM
   - DOMAIN-SUFFIX,live.cn,直接连接
   - RULE-SET,Slack,国外流量
+  - DOMAIN-SUFFIX,nodeseek.com,国外流量
+  - DOMAIN-KEYWORD,cloudflare,国外流量
+  - PROCESS-NAME,Telegram,国外流量
+  - DOMAIN-SUFFIX,zotero.org,国外流量
+  - DOMAIN-SUFFIX,readthedocs.org,国外流量
+  - DOMAIN-KEYWORD,anthropic,🇸🇬 AIRPORT-SG
+  - DOMAIN-KEYWORD,claude,🇸🇬 AIRPORT-SG
 
   - GEOIP,CN,DIRECT
   - MATCH,其他流量

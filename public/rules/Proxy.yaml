@@ -318,6 +318,12 @@ payload:
   - DOMAIN-SUFFIX,zello.com,Proxy
   - DOMAIN-SUFFIX,zeronet.io,Proxy
   - DOMAIN-SUFFIX,zoom.us,Proxy
+  - DOMAIN-SUFFIX,prius-lab.top,Proxy
+  - DOMAIN-SUFFIX,ted.com,Proxy
+  - DOMAIN-SUFFIX,wikidata.org,Proxy
+  - DOMAIN-SUFFIX,leonardo.ai,Proxy
+  - DOMAIN-SUFFIX,bfl.ai,Proxy
+  - DOMAIN-SUFFIX,hetzner.com,Proxy
   - DOMAIN-KEYWORD,jav,Proxy
   - DOMAIN-KEYWORD,pinterest,Proxy
   - DOMAIN-KEYWORD,porn,Proxy
