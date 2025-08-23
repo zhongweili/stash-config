@@ -2322,7 +2322,6 @@ payload:
  - DOMAIN-SUFFIX,cloudmobi.net,AdBlock
  - DOMAIN-SUFFIX,cm.adgrx.com,AdBlock
  - DOMAIN-SUFFIX,cm.baidu.com,AdBlock
- - DOMAIN-SUFFIX,cm.bilibili.com,AdBlock
  - DOMAIN-SUFFIX,cm.ctnsnet.com,AdBlock
  - DOMAIN-SUFFIX,cm.eyereturn.com,AdBlock
  - DOMAIN-SUFFIX,cm.mct01.com,AdBlock
@@ -5368,7 +5367,6 @@ payload:
  - DOMAIN-SUFFIX,mini.hao123.com,AdBlock
  - DOMAIN-SUFFIX,mini.jijiplayer.com,AdBlock
  - DOMAIN-SUFFIX,mini2015.qq.com,AdBlock
- - DOMAIN-SUFFIX,miniapp.bilibili.com,AdBlock
  - DOMAIN-SUFFIX,minidcsc.kugou.com,AdBlock
  - DOMAIN-SUFFIX,minipage.2345.com,AdBlock
  - DOMAIN-SUFFIX,minisite.vidown.cn,AdBlock
