@@ -367,6 +367,9 @@ BASE-DATA:
       HuggingFace:
         rule-file-path-HuggingFace: &rule-file-path-HuggingFace myprovider/ruleset/HuggingFace.yaml
         rule-provider-url-HuggingFace: &rule-provider-url-HuggingFace https://cdn.jsdelivr.net/gh/zhongweili/stash-config@master/public/rules/HuggingFace.yaml
+      PackageManager:
+        rule-file-path-PackageManager: &rule-file-path-PackageManager myprovider/ruleset/PackageManager.yaml
+        rule-provider-url-PackageManager: &rule-provider-url-PackageManager https://cdn.jsdelivr.net/gh/zhongweili/stash-config@master/public/rules/PackageManager.yaml
 
 
   icon-providers-config:
@@ -427,6 +430,7 @@ BASE-DATA:
     icon-Auto: &icon-Auto https://cdn.jsdelivr.net/gh/zuluion/Qure/IconSet/Color/Auto.png
     icon-JavSP: &icon-JavSP https://cdn.jsdelivr.net/gh/zuluion/Qure/IconSet/Color/JavSP.png
     icon-Reddit: &icon-Reddit https://cdn.jsdelivr.net/gh/zuluion/Qure/IconSet/Color/Reddit.png
+    icon-PackageManager: &icon-PackageManager https://cdn.jsdelivr.net/gh/zuluion/Qure/IconSet/Color/Download.png
 # ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -897,6 +901,12 @@ proxy-groups:
       - 直接连接
       - 国外流量
   -
+    name: PackageManager
+    icon: *icon-PackageManager
+    type: select
+    proxies:
+      *proxies-all
+  -
     name: 直接连接
     icon: *icon-Direct
     type: select
@@ -1080,6 +1090,7 @@ rules:
   - RULE-SET,Perplexity,Perplexity
   - RULE-SET,DownLoadClient,DIRECT
   - RULE-SET,ProxyClient,DIRECT
+  - RULE-SET,PackageManager,PackageManager
   - RULE-SET,Docker,国外流量
   - RULE-SET,AdBlock,REJECT
   - RULE-SET,Apple,Apple
@@ -1398,4 +1409,10 @@ rule-providers:
     behavior: classical
     path: *rule-file-path-HuggingFace
     url: *rule-provider-url-HuggingFace
+    interval: *rule-interval
+  PackageManager:
+    type: http
+    behavior: classical
+    path: *rule-file-path-PackageManager
+    url: *rule-provider-url-PackageManager
     interval: *rule-interval
